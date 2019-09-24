@@ -63,15 +63,16 @@ def signin():
     return userkey
 
 def add_entry(text):
-    
-    text = text 
+    podpis = "https://github.com/a000b/ZombieBot\n\n"
+    tagi = "#bitcoin #kryptowaluty #zombiebot"
+    entry = text + podpis + tagi
     url = f'https://a2.wykop.pl/Entries/Add/{appkey_param}{token_param}{usrkey_param}'
-    data = {'body': text}
-    tajny = f'{secret}{url}{text}'
+    data = {'body': entry}
+    tajny = f'{secret}{url}{entry}'
     try:
         r = requests.post(url, data=data, headers=sign_data(tajny))
     except:
-        print('err')
+        pass
 
 
 main()
