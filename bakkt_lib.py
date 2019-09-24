@@ -12,7 +12,7 @@ def get_info(period):
     try:
         r = session.get(url)
         r.html.render()
-        table = r.html.find('table', first=True)
+
         data = [element.text for element in r.html.find('td')]
         data[2] = data[2].replace("\n", " ")
         data[5] = url
