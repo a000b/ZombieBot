@@ -46,7 +46,7 @@ def main():
    b =  btc_fee(get_fee('btc'))
    e =  eth_fee(get_fee('eth'))
    if b != 'err' and e != 'err':
-       entry = b + "\n\n" + e
+       entry = b + "\n\n" + e + "\n"
        w = wypok_bot_lib
        w.add_entry(entry)
 
