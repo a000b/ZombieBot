@@ -14,10 +14,12 @@ def get_info(period):
         r.html.render()
         data = [element.text for element in r.html.find('td')]
         data[2] = data[2].replace("\n", " ")
-        data[8] = data[8].replace("\n", " ")
         data[5] = url
+        if len(data) > 6:
+            data[8] = data[8].replace("\n", " ")
     except:
         data ='err'
     return(data)
+
 
 
