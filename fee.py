@@ -1,5 +1,5 @@
 import requests, json, price
-# import wypok_bot_lib
+import wypok_bot_lib
 
 def get_fee(coin):
     if coin == 'eth':
@@ -74,8 +74,7 @@ def main():
    e =  eth_fee(get_fee('eth'))
    if b != 'err' and e != 'err':
        entry = b + "\n\n" + e +"\n"
-       print(entry)
-#        w = wypok_bot_lib
-#        w.add_entry(entry)
+       w = wypok_bot_lib
+       w.add_entry(entry)
 
 main()
