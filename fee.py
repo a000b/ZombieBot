@@ -35,10 +35,10 @@ def eth_fee(dane):
             ffcost = ''
             scost = ''
         w = p + 'ETH recommended gas price, koszt policzony dla tx 21000 gas:\n\n'
-        fastesteth = 'fastest < 30 seconds : ' + str(float(dane['fastest']) /10 ) + ' gwei - ' + ffcost + '\n'
-        fasteth =  'fast    < 2 minutes  : ' + str(float(dane['fast']) /10 ) + ' gwei - ' + fcost + '\n'
-        safeloweth = 'safelow < 30 minutes : ' + str(float(dane['safeLow']) /10 ) + ' gwei - ' + scost + '\n\n'
-        k = "https://ethgasstation.info/"
+        fastesteth = 'fastest < 30 seconds : ' + str(float(dane['fastest']) /10 ) + ' gwei : ~' + ffcost + ' za tx 21000 gas\n'
+        fasteth =  'fast    < 2 minutes  : ' + str(float(dane['fast']) /10 ) + ' gwei ; ~' + fcost + ' za tx 21000 gas\n'
+        safeloweth = 'safelow < 30 minutes : ' + str(float(dane['safeLow']) /10 ) + ' gwei : ~' + scost + ' za tx 21000 gas\n\n'
+        k = "https://ethgasstation.info/\n"
         entry = w + fastesteth + fasteth + safeloweth + k
     else:
         entry ='err'
@@ -60,9 +60,9 @@ def btc_fee(dane):
             hcost = ''
             ocost = ''
         w = p + 'BTC recommended fee, koszt policzony dla tx 140 Vbytes:\n\n'
-        fastestbtc =  'fastest   : ' + str(dane['fastestFee']) + ' sat - ' + fcost + '\n'
-        halfhbtc = 'half hour : ' + str(dane['halfHourFee']) + ' sat  - ' + hcost + '\n'
-        onehbtc = 'one hour  : ' + str(dane['hourFee']) + ' sat - ' + ocost + '\n\n'
+        fastestbtc =  'fastest   : ' + str(dane['fastestFee']) + ' sat/Vb : ~' + fcost + ' za tx 140Vb\n'
+        halfhbtc = 'half hour : ' + str(dane['halfHourFee']) + ' sat/Vb  : ~' + hcost + ' za tx 140Vb\n'
+        onehbtc = 'one hour  : ' + str(dane['hourFee']) + ' sat/Vb : ~' + ocost + ' za tx 140Vb\n\n'
         k = "https://mempool.space/"
         entry = w + fastestbtc + halfhbtc + onehbtc + k
     else:
