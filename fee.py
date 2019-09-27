@@ -59,10 +59,10 @@ def btc_fee(dane):
             fcost = ''
             hcost = ''
             ocost = ''
-        w = p + 'BTC recommended fee, koszt policzony dla tx 140 Vbytes:\n\n'
-        fastestbtc =  'fastest   : ' + str(dane['fastestFee']) + ' sat/Vb : ~' + fcost + ' za tx 140Vb\n'
-        halfhbtc = 'half hour : ' + str(dane['halfHourFee']) + ' sat/Vb  : ~' + hcost + ' za tx 140Vb\n'
-        onehbtc = 'one hour  : ' + str(dane['hourFee']) + ' sat/Vb : ~' + ocost + ' za tx 140Vb\n\n'
+        w = p + 'BTC recommended fee, koszt policzony dla tx 140 VBytes:\n\n'
+        fastestbtc =  'fastest   : ' + str(dane['fastestFee']) + ' sat/VB : ~' + fcost + ' za tx 140VB\n'
+        halfhbtc = 'half hour : ' + str(dane['halfHourFee']) + ' sat/VB  : ~' + hcost + ' za tx 140VB\n'
+        onehbtc = 'one hour  : ' + str(dane['hourFee']) + ' sat/VB : ~' + ocost + ' za tx 140VB\n\n'
         k = "https://mempool.space/"
         entry = w + fastestbtc + halfhbtc + onehbtc + k
     else:
