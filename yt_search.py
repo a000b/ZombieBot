@@ -25,7 +25,7 @@ def search_yt_latest_vid(searchtext, dn):
     return content
 
 def create_entry(dane, stext):
-    wstep = "The most view last on YT; 7 days; search = " + "'" + stext + "'\n\n"
+    wstep = "The most viewed on YT; last 7 days; search = " + "'" + stext + "'\n\n"
     main_url = "https://www.youtube.com/watch?v="
     e = {}
     entry = wstep
