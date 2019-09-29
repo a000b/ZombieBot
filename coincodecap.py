@@ -12,7 +12,7 @@ def main():
             pass
     
 def get_info(coin):
-    url = 'https://api.coincodecap.co/v1/details/' + coin
+    url = 'https://api.coincodecap.com/v1/details/' + coin
     try:
         response = r.get(url)
         content = response.json()

@@ -34,10 +34,10 @@ def eth_fee(dane):
             fcost = ''
             ffcost = ''
             scost = ''
-        w = p + 'ETH recommended gas price, koszt policzony dla tx 21000 gas:\n\n'
-        fastesteth = 'fastest < 30 seconds : ' + str(float(dane['fastest']) /10 ) + ' gwei : ~' + ffcost + ' za tx 21000 gas\n'
-        fasteth =  'fast    < 2 minutes  : ' + str(float(dane['fast']) /10 ) + ' gwei ; ~' + fcost + ' za tx 21000 gas\n'
-        safeloweth = 'safelow < 30 minutes : ' + str(float(dane['safeLow']) /10 ) + ' gwei : ~' + scost + ' za tx 21000 gas\n\n'
+        w = p + 'ETH recommended gas price.\nTx size 21000 gas:\n\n'
+        fastesteth = 'fastest < 30 seconds : ' + str(float(dane['fastest']) /10 ) + ' gwei : ~' + ffcost + ' za tx\n'
+        fasteth =  'fast    < 2 minutes  : ' + str(float(dane['fast']) /10 ) + ' gwei : ~' + fcost + ' za tx\n'
+        safeloweth = 'safelow < 30 minutes : ' + str(float(dane['safeLow']) /10 ) + ' gwei : ~' + scost + ' za tx\n\n'
         k = "https://ethgasstation.info/\n"
         entry = w + fastesteth + fasteth + safeloweth + k
     else:
@@ -59,10 +59,10 @@ def btc_fee(dane):
             fcost = ''
             hcost = ''
             ocost = ''
-        w = p + 'BTC recommended fee, koszt policzony dla tx 140 VBytes:\n\n'
-        fastestbtc =  'fastest   : ' + str(dane['fastestFee']) + ' sat/VB : ~' + fcost + ' za tx 140VB\n'
-        halfhbtc = 'half hour : ' + str(dane['halfHourFee']) + ' sat/VB  : ~' + hcost + ' za tx 140VB\n'
-        onehbtc = 'one hour  : ' + str(dane['hourFee']) + ' sat/VB : ~' + ocost + ' za tx 140VB\n\n'
+        w = p + 'BTC recommended fee.\nTx size 140 VBytes:\n\n'
+        fastestbtc =  'fastest   : ' + str(dane['fastestFee']) + ' sat/VB : ~' + fcost + ' za tx\n'
+        halfhbtc = 'half hour : ' + str(dane['halfHourFee']) + ' sat/VB  : ~' + hcost + ' za tx\n'
+        onehbtc = 'one hour  : ' + str(dane['hourFee']) + ' sat/VB : ~' + ocost + ' za tx\n\n'
         k = "https://mempool.space/"
         entry = w + fastestbtc + halfhbtc + onehbtc + k
     else:
@@ -74,6 +74,7 @@ def main():
    e =  eth_fee(get_fee('eth'))
    if b != 'err' and e != 'err':
        entry = b + "\n\n" + e +"\n"
+       print(entry)
        w = wypok_bot_lib
        w.add_entry(entry)
 

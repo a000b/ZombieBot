@@ -1,4 +1,5 @@
-import requests, json, datetime, wypok_bot_lib
+import requests, json, datetime
+# import wypok_bot_lib
 
 def read_file(filename):
     with open(filename, "r", encoding='utf-8') as f:
@@ -14,10 +15,11 @@ def search_yt_latest_vid(searchtext, dn):
     search_url = f"https://www.googleapis.com/youtube/v3/search?" \
                  + f"part=snippet&maxResults=5&order=viewCount&publishedAfter" \
                  + f"={data_od}T00%3A00%3A00Z&publishedBefore={data_do}T00%3A00%3A00Z&q={searchtext}" \
-                 + f"&fields=items(id(channelId%2CvideoId)%2Csnippet(publishedAt%2Ctitle))&key={API_KEY}"
+                 + f"&type=video&fields=items(id(channelId%2CvideoId)%2Csnippet(publishedAt%2Ctitle))&key={API_KEY}"
     try:
         r = requests.get(search_url)
         content = r.json()['items']
+        print(content)
     except:
         print(r.status_code)
         content = 'err'
@@ -29,14 +31,16 @@ def create_entry(dane, stext):
     main_url = "https://www.youtube.com/watch?v="
     e = {}
     entry = wstep
+    i = 0
 
     if dane != 'err':
         for i, d in enumerate(dane, 1):
             try:
                 e['url'] =  main_url + d['id']['videoId']
+                e['pos'] = "No. " + str(i)
                 e['title'] = d["snippet"]["title"]
                 e['publishedAt'] = str(d["snippet"]["publishedAt"]).replace("T", " ")[:19]
-                entry += str(e['title']) + "\n" + "Published at : " + str(e['publishedAt']) + \
+                entry += str(e['pos']) + "\n" + str(e['title']) + "\n" + "Published at : " + str(e['publishedAt']) + \
                      "\n" + str(e['url']) + "\n\n"
             except KeyError:
                 pass
@@ -49,7 +53,8 @@ def main():
     yt = create_entry(search_yt_latest_vid(st, 7), st)
     if yt != 'err':
        entry = yt +"\n\n"
-       w = wypok_bot_lib
-       w.add_entry(entry)
-       
+       print(entry)
+#        w = wypok_bot_lib
+#        w.add_entry(entry)
+#        
 main()
