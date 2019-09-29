@@ -1,5 +1,5 @@
 import requests, json, datetime
-# import wypok_bot_lib
+import wypok_bot_lib
 
 def read_file(filename):
     with open(filename, "r", encoding='utf-8') as f:
@@ -7,6 +7,7 @@ def read_file(filename):
     return d
 
 def search_yt_latest_vid(searchtext, dn):
+    global API_KEY
     API_KEY = read_file("client_secret.json")["key"]
     dzis = datetime.date.today()
     data_od = str(dzis - datetime.timedelta(int(dn)))
@@ -19,15 +20,26 @@ def search_yt_latest_vid(searchtext, dn):
     try:
         r = requests.get(search_url)
         content = r.json()['items']
-        print(content)
     except:
         print(r.status_code)
         content = 'err'
 
     return content
 
+def get_stats(videoid):
+    url =  f"https://www.googleapis.com/youtube/v3/videos?part=statistics&id={videoid}" \
+          + f"&fields=items%2Fstatistics&key={API_KEY}"
+    try:
+        r = requests.get(url)
+        content = r.json()['items']
+    except:
+        print(r.status_code)
+        content = 'err'
+
+    return content
+    
 def create_entry(dane, stext):
-    wstep = "The most viewed on YT; last 7 days; search = " + "'" + stext + "'\n\n"
+    wstep = "The most viewed on YT during last 7 days.\nSearch = " + "'" + stext + "'\n\n"
     main_url = "https://www.youtube.com/watch?v="
     e = {}
     entry = wstep
@@ -40,8 +52,16 @@ def create_entry(dane, stext):
                 e['pos'] = "No. " + str(i)
                 e['title'] = d["snippet"]["title"]
                 e['publishedAt'] = str(d["snippet"]["publishedAt"]).replace("T", " ")[:19]
+                
+                st = get_stats(d['id']['videoId'])
+                
+                if st != 'err':
+                    for s in st:
+                        e['stats'] = "Views : " + str(s['statistics']['viewCount']) + " Likes : " + str(s['statistics']['likeCount'])
+                else:
+                    e['stats'] = ''
                 entry += str(e['pos']) + "\n" + str(e['title']) + "\n" + "Published at : " + str(e['publishedAt']) + \
-                     "\n" + str(e['url']) + "\n\n"
+                     "\n" + str(e['stats']) + "\n" + str(e['url']) + "\n\n"
             except KeyError:
                 pass
     else:
@@ -54,7 +74,7 @@ def main():
     if yt != 'err':
        entry = yt +"\n\n"
        print(entry)
-#        w = wypok_bot_lib
-#        w.add_entry(entry)
+       w = wypok_bot_lib
+       w.add_entry(entry)
 #        
 main()
