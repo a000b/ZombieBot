@@ -1,31 +1,25 @@
 import wypok_bot_lib
 import bakkt_lib
 
-def new_entry(data):
-    mesg1 = (
-        f"BAKKT stats:\n\n"
-        f"Kontrakt : {data[0]}\n"
-        f"Wolumen : {data[4]} BTC\n"
-        f"Czas : {data[2]}\n"
-        f"Cena : {data[1]}\n"
-        f"Zmiana : {data[3]}%\n\n"
+
+
+def new_entry(*args):
+    data = args[0][0]
+    mesg = f"BAKKT stats:\n\n"
+    for i in range(0, len(data), 6):
+        z = data[i:i + 6]
+        mesg += (
+        f"Kontrakt : {z[0]}\n"
+        f"Wolumen : {z[4]} BTC\n"
+        f"Czas : {z[2]}\n"
+        f"Cena : {z[1]}\n"
+        f"Zmiana : {z[3]}%\n\n"
         )
-    if len(data) > 6:
-        mesg2 = (
-            f"Kontrakt : {data[6]}\n"
-            f"Wolumen : {data[10]} BTC\n"
-            f"Czas : {data[8]}\n"
-            f"Cena : {data[7]}\n"
-            f"Zmiana : {data[9]}%\n\n"
-            )
-    else:
-        mesg2 = ''
         
-    mesg3 = (
-        f"Źródło : {data[5]}\n\n"
+    mesg += (
+        f"Źródło : {args[0][1]}\n\n"
         )
-    mesg = mesg1 + mesg2 + mesg3
-    
+
     return(mesg)
 
 def main():
