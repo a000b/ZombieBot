@@ -36,7 +36,7 @@ def main():
         usrkey = parms['usrkey']
         usrkey_param = f'userkey/{usrkey}/'
         token_param = f'token/{usrkey}/'
-
+        print(token_param)
 
 def load_parms(filename):
     with open(filename, "r", encoding='utf-8') as f:
@@ -51,7 +51,7 @@ def sign_data(data):
 
 def signin():
     url = f"{main_url}{request_type}{appkey_param}"
-    tajny = f"{secret}{url}{login},{password},{acckey}"                                                                                          
+    tajny = f"{secret}{url}{login},{password},{acckey}"
     data = {'login': login, 'password': password, 'accountkey': acckey}
 
     try:
@@ -60,19 +60,21 @@ def signin():
         userkey = content['data']['userkey']
     except:
         userkey = 'err'
+        print(r.json())
     return userkey
 
-def add_entry(text):
+def add_entry(text, img):
     podpis = "https://github.com/a000b/ZombieBot\n\n"
     tagi = "#bitcoin #kryptowaluty #zombiebot"
     entry = text + podpis + tagi
     url = f'https://a2.wykop.pl/Entries/Add/{appkey_param}{token_param}{usrkey_param}'
-    data = {'body': entry}
-    tajny = f'{secret}{url}{entry}'
+    data = {'body': entry,
+            'embed' : img}
+    tajny = f'{secret}{url}{entry},{img}'
     try:
         r = requests.post(url, data=data, headers=sign_data(tajny))
     except:
-        pass
+        print(r.json())
 
 
 main()

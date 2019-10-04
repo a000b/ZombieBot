@@ -7,7 +7,8 @@ def main():
     for s in symbol:
         entry = str(new_entry(s))
         if entry != 'err':
-            w.add_entry(entry)
+            img = ''
+            w.add_entry(entry, img)
         else:
             pass
     

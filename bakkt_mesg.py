@@ -25,7 +25,9 @@ def new_entry(*args):
 def main():
     b = bakkt_lib.get_info('monthly')
     if b != 'err':
-        wypok_bot_lib.add_entry((new_entry(b)))
+#         print(new_entry(b))
+        img = ''
+        wypok_bot_lib.add_entry((new_entry(b), img))
     else:
         print('err')
 

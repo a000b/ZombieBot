@@ -73,8 +73,9 @@ def main():
     yt = create_entry(search_yt_latest_vid(st, 7), st)
     if yt != 'err':
        entry = yt +"\n\n"
-       print(entry)
+       img = ''
+#        print(entry)
        w = wypok_bot_lib
-       w.add_entry(entry)
+       w.add_entry(entry, img)
 #        
 main()
