@@ -15,7 +15,7 @@ async def get_img(url, output_file):
 def main():
     url = 'https://coinmarketcap.com/charts/'
     img = "btc_d.png"
-#     z = asyncio.get_event_loop().run_until_complete(get_img(url, img))
+    z = asyncio.get_event_loop().run_until_complete(get_img(url, img))
     w = wypok_bot_lib
     text = 'Źródło : ' + url +'\n\n'
     w.add_entry(text, img, 1)

@@ -65,8 +65,8 @@ def signin():
 
 def add_entry(text, img, mode=0):
     podpis = "https://github.com/a000b/ZombieBot\n\n"
-#     tagi = "#bitcoin #kryptowaluty #zombiebot"
-    entry = text + podpis #+ tagi
+    tagi = "#bitcoin #kryptowaluty #zombiebot"
+    entry = text + podpis + tagi
     url = f'https://a2.wykop.pl/Entries/Add/{appkey_param}{token_param}{usrkey_param}'
 
     if mode == 0:
