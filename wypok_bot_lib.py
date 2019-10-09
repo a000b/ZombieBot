@@ -63,18 +63,28 @@ def signin():
         print(r.json())
     return userkey
 
-def add_entry(text, img):
+def add_entry(text, img, mode=0):
     podpis = "https://github.com/a000b/ZombieBot\n\n"
-    tagi = "#bitcoin #kryptowaluty #zombiebot"
-    entry = text + podpis + tagi
+#     tagi = "#bitcoin #kryptowaluty #zombiebot"
+    entry = text + podpis #+ tagi
     url = f'https://a2.wykop.pl/Entries/Add/{appkey_param}{token_param}{usrkey_param}'
-    data = {'body': entry,
-            'embed' : img}
-    tajny = f'{secret}{url}{entry},{img}'
-    try:
-        r = requests.post(url, data=data, headers=sign_data(tajny))
-    except:
-        print(r.json())
+
+    if mode == 0:
+        data = {'body': entry,
+                'embed' : img}
+        tajny = f'{secret}{url}{entry},{img}'
+        try:
+            r = requests.post(url, data=data, headers=sign_data(tajny))
+        except:
+            print(r.json())
+    else:
+        myfiles = {'embed': (img, open(img ,'rb'), 'image/png')}
+        data = {'body': entry}
+        tajny = f'{secret}{url}{entry}'
+        try:
+            r = requests.post(url, data=data, files=myfiles, headers=sign_data(tajny))
+        except:
+            print(r.json())
 
 
 main()
