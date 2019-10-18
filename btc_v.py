@@ -18,9 +18,9 @@ def main():
 
 
     z = scr_lib.take_scr(url, 'scr.png', selector)
-    w = wypok_bot_lib
-    text = 'Źródło : ' + url +'\n\n'
-    w.add_entry(text, img, 1)
+    # w = wypok_bot_lib
+    # text = 'Źródło : ' + url +'\n\n'
+    # w.add_entry(text, img, 1)
 
 
 
