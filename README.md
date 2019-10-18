@@ -1,5 +1,6 @@
 # ZombieBot
 Content Bot for wykop.pl (tags bitcoin, kryptowaluty)
+https://www.wykop.pl/ludzie/Atari_XE/
 
 Dokumentacja :) w pliku
 https://github.com/a000b/ZombieBot/blob/master/dokumentacja.png
