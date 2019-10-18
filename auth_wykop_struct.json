@@ -1,7 +1,0 @@
-{"login": "nazwa",
- "password": "hasło", 
- "appkey": "klucz aplikacji", 
- "secret": "wiadomo", 
- "acckey": "klucz konta", 
- "usrkey": null
-}
