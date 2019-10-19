@@ -1,4 +1,4 @@
-import wypok_bot_lib
+# import wypok_bot_lib
 import scr_lib, sys
 
 def main():
@@ -13,6 +13,9 @@ def main():
     elif sys.argv[1] == 'b':
         url = "https://www.coingecko.com/en/exchanges/binance_futures"
         selector = "table"
+    elif sys.argv[1] == 't':
+        url = 'https://trends.google.pl/trends/explore?q=bitcoin'
+        selector = "body"
     else:
         pass
 
