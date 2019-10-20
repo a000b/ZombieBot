@@ -1,7 +1,8 @@
-# import wypok_bot_lib
+import wypok_bot_lib
 import scr_lib, sys
 
 def main():
+    text = ''
     if sys.argv[1] == 'd':
         url = 'https://coinmarketcap.com/charts/'
         selector = "#dominance-percentage-graph"
@@ -15,15 +16,21 @@ def main():
         selector = "table"
     elif sys.argv[1] == 't':
         url = 'https://trends.google.pl/trends/explore?q=bitcoin'
-        selector = "body"
+        selector = "html"
+    elif sys.argv[1] == 'vp':
+        url = 'https://www.buybitcoinworldwide.com/volatility-index/'
+        selector = "#highchart_simple_div"
+        text += "BTC volatility / price index.\n\n"
     else:
         pass
 
 
     z = scr_lib.take_scr(url, 'scr.png', selector)
-    # w = wypok_bot_lib
-    # text = 'Źródło : ' + url +'\n\n'
-    # w.add_entry(text, img, 1)
+    w = wypok_bot_lib
+
+    text += 'Źródło : ' + url +'\n\n'
+    # print(text)
+    w.add_entry(text,'scr.png', 1)
 
 
 
