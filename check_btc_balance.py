@@ -79,7 +79,7 @@ def find_text(search_string):
 
 def main():
     lista_wpis = []
-    mseg = "Rysiek balance check test:\n\n"
+    mesg = "Rysiek balance check test:\n\n"
     entries = getbalance(addr_list)
 
     if len(entries) != 0:
@@ -88,10 +88,12 @@ def main():
                 # print(entry)
                 lista_wpis.append(entry)
         if len(lista_wpis) != 0:
-            mesg = pp.pformat(lista_wpis)
+            for m in lista_wpis:
+                mesg += str(pp.pformat(m).replace('"','').replace("'", "").\
+                    replace("{", "").replace("}", "").replace("[", "").replace("]", "").replace(",", "") ) + "\n\n"
             print("test", mesg)
             img = ''
-            w.add_entry(mseg, img)
+            w.add_entry(mesg, img)
     else:
         print('err')
     save_file(entries)
