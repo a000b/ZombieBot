@@ -62,7 +62,7 @@ def save_file(dane):
 
 
 def read_file():
-    list_read = []
+    # list_read = []
     with open("balance.pickle", "rb") as plik:
         list_read = pickle.load(plik)
     return list_read
