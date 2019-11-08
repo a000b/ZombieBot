@@ -84,7 +84,7 @@ def main():
 
     if len(entries) != 0:
         for entry in entries:
-            if entry['block_height'] == find_text(entry["address"]):
+            if entry['block_height'] != find_text(entry["address"]):
                 # print(entry)
                 lista_wpis.append(entry)
         if len(lista_wpis) != 0:
