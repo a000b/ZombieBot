@@ -1,10 +1,11 @@
 import asyncio, time
 from pyppeteer import launch
+from pyppeteer.page import Page
 
 async def get_img(*args):
-    print(args[0][2])
-    browser = await launch()
-    page = await browser.newPage()
+
+    browser = await launch(options = None)
+    page: Page = await browser.newPage()
     await page.setViewport({'width': 1366, 'height': 768});
     await page.goto(args[0][0], {'waitUntil': 'networkidle2'})
     time.sleep(5)
