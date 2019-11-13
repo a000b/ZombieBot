@@ -2,7 +2,6 @@
 
 import requests
 import pickle
-import pprint as pp
 import wypok_bot_lib as w
 
 
@@ -22,19 +21,16 @@ def getbalance(addresses):
         try:
             response = requests.get('https://blockstream.info/api/address/' + addr)
         except Exception as e:
-            # print(e)
             pass
         else:
             if response.status_code == 200:
                 content = response.json()
-                # pprint(content)
                 balance = (int(content['chain_stats']['funded_txo_sum']) - int(content['chain_stats']['spent_txo_sum'])) / 10**8
                 entry_balance = {'link' : 'https://blockstream.info/address/' + addr, 'balance' : balance}
                 txs_entry = getx(addr)
                 entry = {**entry_balance, **txs_entry}
                 entry_list.append(entry)
             else:
-                # print(response.status_code)
                 pass
     return entry_list
 
@@ -42,16 +38,12 @@ def getx(address):
     try:
         response = requests.get('https://blockstream.info/api/address/' + address + "/txs")
     except Exception as e:
-        # print(e)
         pass
     else:
         if response.status_code == 200:
             content = response.json()
             entry_tx = {"last txid" : content[0]["txid"], 'block_height': content[0]["status"]["block_height"], "address" : address}
-            # print(content)
-            # pp.pprint(content[0])
         else:
-            # print(response.status_code)
             pass
     return entry_tx
 
@@ -62,7 +54,6 @@ def save_file(dane):
 
 
 def read_file():
-    # list_read = []
     with open("balance.pickle", "rb") as plik:
         list_read = pickle.load(plik)
     return list_read
@@ -87,7 +78,6 @@ def main():
             search_ = find_text(entry["address"])
             if entry['block_height'] != search_[0]:
                 diff_ = float(entry['balance']) - float(search_[1])
-                # print(f'{diff_:10.8f}')
                 entry.update({'change': f'{diff_:10.8f}' })
                 lista_wpis.append(entry)
         if len(lista_wpis) != 0:
