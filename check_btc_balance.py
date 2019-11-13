@@ -48,8 +48,8 @@ def getx(address):
         if response.status_code == 200:
             content = response.json()
             entry_tx = {"last txid" : content[0]["txid"], 'block_height': content[0]["status"]["block_height"], "address" : address}
-            # print(entry)
-            # pprint(content[0])
+            # print(content)
+            # pp.pprint(content[0])
         else:
             # print(response.status_code)
             pass
@@ -72,30 +72,41 @@ def find_text(search_string):
     for k, s in enumerate(existing_list):
         found = str(s).find(search_string)
         if found != -1:
-            return s['block_height']
+            return s['block_height'], s['balance']
         else:
             pass
 
 
 def main():
     lista_wpis = []
-    mesg = "Rysiek balance check test:\n\n"
+    my_mesg = "Palenie BTC;\nsprawdzenie znanych bogus addresses;\nczęstotliwość sprawdzenia 1x24h\n\n"
     entries = getbalance(addr_list)
 
     if len(entries) != 0:
         for entry in entries:
-            if entry['block_height'] != find_text(entry["address"]):
-                # print(entry)
+            search_ = find_text(entry["address"])
+            if entry['block_height'] != search_[0]:
+                diff_ = float(entry['balance']) - float(search_[1])
+                # print(f'{diff_:10.8f}')
+                entry.update({'change': f'{diff_:10.8f}' })
                 lista_wpis.append(entry)
         if len(lista_wpis) != 0:
             for m in lista_wpis:
-                mesg += str(pp.pformat(m).replace('"','').replace("'", "").\
-                    replace("{", "").replace("}", "").replace("[", "").replace("]", "").replace(",", "") ) + "\n\n"
-            print("test", mesg)
+                my_mesg += f"Adres :{m['address']}\n" \
+                    f"Balance :{m['balance']}\n" \
+                    f"Zmiana  :{m['change']}\n" \
+                    f"Last block tx :{m['block_height']}\n" \
+                    f"Link : {m['link']} \n\n"
+                # mesg += str(pp.pformat(m).replace('"','').replace("'", "").\
+                #     replace("{", "").replace("}", "").replace("[", "").replace("]", "").replace(",", "") ) + "\n\n"
+            print(my_mesg)
             img = ''
-            w.add_entry(mesg, img)
+            w.add_entry(my_mesg, img)
     else:
         print('err')
     save_file(entries)
 
 main()
+# b = {'link': 'https://blockstream.info/address/1BitcoinEaterAddressDontSendf59kuE', 'balance': 12.22480954, 'last txid': '585d11c224013b2521425b0733fe9f3de92d4d13019410c44c3ee3951f1b97df', 'block_height': 603310, 'address': '1BitcoinEaterAddressDontSendf59kuE'}, {'link': 'https://blockstream.info/address/1CounterpartyXXXXXXXXXXXXXXXUWLpVr', 'balance': 1130.87119421, 'last txid': '90212248b1753724b66d7994dd8c03e7c8b702b12851ec53b8e57edb092a78e8', 'block_height': 602920, 'address': '1CounterpartyXXXXXXXXXXXXXXXUWLpVr'}, {'link': 'https://blockstream.info/address/1QLbz7JHiBTspS962RLKV8GndWFwi5j6Qr', 'balance': 0.01249, 'last txid': '6240f61bbaeac66cd623e921a153addaf5f379a996f2de0f0c6506d628fe3812', 'block_height': 417350, 'address': '1QLbz7JHiBTspS962RLKV8GndWFwi5j6Qr'}, {'link': 'https://blockstream.info/address/1111111111111111111114oLvT2', 'balance': 9.44623692, 'last txid': 'b6332d101b1f21a02b50645c09b62644fed0064ce60fa5569f23ef6bfd27819a', 'block_height': 603480, 'address': '1111111111111111111114oLvT2'}
+# save_file(b)
+# print(read_file())
