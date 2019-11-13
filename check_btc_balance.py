@@ -60,7 +60,7 @@ def read_file():
 
 def find_text(search_string):
     existing_list = read_file()
-    for k, s in enumerate(existing_list):
+    for s in existing_list:
         found = str(s).find(search_string)
         if found != -1:
             return s['block_height'], s['balance']
@@ -87,7 +87,6 @@ def main():
                     f"Zmiana  :{m['change']}\n" \
                     f"Last block tx :{m['block_height']}\n" \
                     f"Link : {m['link']} \n\n"
-            print(my_mesg)
             img = ''
             w.add_entry(my_mesg, img)
     else:
