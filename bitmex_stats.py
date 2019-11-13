@@ -2,7 +2,7 @@ import requests as r
 import locale
 import wypok_bot_lib as w
 
-locale.setlocale(locale.LC_ALL, "pl_PL.UTF-8")
+locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
 
 def get_stats(*args):
@@ -22,6 +22,7 @@ def get_stats(*args):
                     entry = f'{"Turnover":>13} : {t} USD\n' \
                             f'{"Turnover365":>13} : {t365} USD\n' \
                             f'{"Turnover24":>13} : {t24} USD\n\n'
+                    entry = entry.replace(",", " ")
         else:
             entry = 'err'
     return entry
@@ -36,8 +37,8 @@ def main():
         entry  += e
         entry += end_
         img = ''
-        print(entry)
-        # w.add_entry(entry, img)
+        # print(entry)
+        w.add_entry(entry, img)
     else:
         print("err")
 
