@@ -6,7 +6,7 @@ async def get_img(*args):
 
     browser = await launch(options = None)
     page: Page = await browser.newPage()
-    await page.setViewport({'width': 1366, 'height': 768});
+    await page.setViewport({'width': 2048, 'height': 1536});
     await page.goto(args[0][0], {'waitUntil': 'networkidle2'})
     time.sleep(5)
     element = await page.querySelector(args[0][2])
