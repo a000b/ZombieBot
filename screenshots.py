@@ -3,10 +3,10 @@ import scr_lib, sys
 
 def main():
     text = ''
-    if sys.argv[1] == 'dominance':
+    if sys.argv[1] == 'dominance_graph':
         url = 'https://coinmarketcap.com/charts/'
         selector = "#dominance-percentage"
-    elif sys.argv[1] == 'cme':
+    elif sys.argv[1] == 'cme_futures':
         url = "https://www.cmegroup.com/trading/equity-index/us-index/bitcoin_quotes_volume_voi.html"
         selector = "#quotesProductPanel"
 #         url = 'https://www.cmegroup.com/trading/equity-index/us-index/bitcoin_quotes_globex.html'
@@ -29,8 +29,8 @@ def main():
         pass
 
     scr_lib.take_scr(url, 'scr.png', selector)
-    text += 'Źródło : ' + url +'\n\n'
-    w.add_entry(text,'scr.png', 1)
+    text += selector + '\nŹródło : ' + url +'\n\n'
+    # w.add_entry(text,'scr.png', 1)
 
 
 
