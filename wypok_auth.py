@@ -1,16 +1,21 @@
 import pickle
 import requests
 import hashlib
+import logging
 
+target_path = ""
+logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
+                    format='%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(message)s')
 
 def check_usrkey_isvalid(kwargs):
     check = get_pm_conversation(kwargs)
     if check == 11:
         r = False
     elif check == 'err':
-        pass
+        logging.error('Błąd przy pobieraniu konwersacji')
     else:
         r = True
+        logging.info('Wypok token aktualny')
     return r
 
 def sign_data(data):
@@ -29,8 +34,9 @@ def get_token(kwargs):
         r = requests.post(url, data=data, headers=sign_data(tajny))
         content = r.json()
         userkey = content['data']['userkey']
-    except:
+    except Exception as e:
         userkey = 'err'
+        logging.error(f'{e},{content}')
     return userkey
 
 
@@ -44,9 +50,12 @@ def get_pm_conversation(kwargs):
             content = r.json()
         else:
             content = r.json()['error']['code']
+            logging.error(f"{content}")
             # print('Err :', r.status_code)
-    except:
+    except Exception as e:
         content = 'err'
+        logging.error(f'{e}')
+
     return content
 
 
@@ -66,4 +75,5 @@ def update_usr_key(fname, kwargs):
     if newkey != 'err':
         kwargs['usrkey'] = newkey
         save_file(fname, kwargs)
+        logging.info(f'Wypok token updated')
 
