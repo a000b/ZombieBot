@@ -18,8 +18,7 @@ def load_parms():
 
 def add_entry(text, img, mode=0):
     my_pickle = load_parms()
-    podpis = "\n\nhttps://github.com/a000b/ZombieBot/blob/master/check_btc_balance.py\n" \
-            "https://github.com/a000b/ZombieBot\n\n"
+    podpis = "\n\nhttps://github.com/a000b/ZombieBot\n\n"
     tagi = "#bitcoin #kryptowaluty #zombiebot"
     entry = text + podpis + tagi
     url = f"https://a2.wykop.pl/Entries/Add/appkey/{my_pickle['appkey']}/token/{my_pickle['usrkey']}/userkey/{my_pickle['usrkey']}/"
