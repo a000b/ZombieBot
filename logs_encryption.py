@@ -17,10 +17,6 @@ def decrypt(gpg_object, input_file, passphrase, output_file):
         status = gpg_object.decrypt_file(f, passphrase=passphrase, output=output_file)
     return status
 
-# def sign(gpg_object, input_file, passphrase, output_file):
-#     with open(input_file, 'rb') as f:
-#         status = gpg_object.
-#     return status
 
 def main():
     gpg_path = 'HOME$/.gnupg' #ścieżka do gpg
@@ -35,7 +31,6 @@ def main():
     #odszyfrowanie
     # status = decrypt(gpg, encrypted,input("p: "), 'decryped.txt')
 
-    #status
     # print('ok: ', status.ok)
     # print('status: ', status.status)
     # print('stderr: ', status.stderr)

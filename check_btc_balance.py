@@ -30,6 +30,7 @@ def getbalance(addresses):
                 txs_entry = getx(addr)
                 entry = {**entry_balance, **txs_entry}
                 entry_list.append(entry)
+                print(entry_list)
             else:
                 pass
     return entry_list
@@ -42,7 +43,8 @@ def getx(address):
     else:
         if response.status_code == 200:
             content = response.json()
-            entry_tx = {"last txid" : content[0]["txid"], 'block_height': content[0]["status"]["block_height"], "address" : address}
+            for k, e in enumerate(content):
+                entry_tx = {"last txid" : content[0]["txid"], 'block_height': content[0]["status"]["block_height"], "address" : address}
         else:
             pass
     return entry_tx
@@ -75,6 +77,7 @@ def main():
 
     if len(entries) != 0:
         for entry in entries:
+            print(entry)
             search_ = find_text(entry["address"])
             if entry['block_height'] != search_[0]:
                 diff_ = float(entry['balance']) - float(search_[1])

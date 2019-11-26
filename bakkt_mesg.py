@@ -21,7 +21,7 @@ def new_entry(*args):
                          f"Cena : {z[1]}\n"
                          f"Zmiana : {z[3]}%\n\n")
             else:
-                logging.WARNING(f"Kontrakt : {z[0]}: Brak danych")
+                logging.warning(f"Kontrakt : {z[0]}: Brak danych")
         except Exception as e:
             logging.error(f"{e}")
 
