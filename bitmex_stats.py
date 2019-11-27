@@ -2,7 +2,11 @@ import requests as r
 import locale
 import wypok_bot_lib as w
 import pickle
+import logging
 
+target_path = ""
+logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
+                    format='%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(message)s')
 locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
 def save_file(dane):
@@ -19,7 +23,8 @@ def get_stats(*args):
     url = "https://www.bitmex.com/api/v1/" + args[0]
     try:
         response = r.get(url)
-    except:
+    except Exception as e:
+        logging.error(e)
         entry = 'err'
     else:
         if response.status_code == 200:
@@ -36,6 +41,7 @@ def get_stats(*args):
                     entry = entry.replace(",", " ")
                     save_file(entry_["turnover24h"])
         else:
+            logging.warning("Problem z danymi Bitmex")
             entry = 'err'
     return entry
 
@@ -43,14 +49,12 @@ def get_stats(*args):
 def main():
     urls = ["stats/historyUSD", "stats"]
     e = get_stats(urls[0])
-    entry = "Bitmex statistics\n\n"
+    entry = "Bitmex statistics\nXBT turnover\n\n"
     end_ = "\n\nŻródło: https://www.bitmex.com/"
     if e != 'err':
         entry  += e
         entry += end_
         img = ''
         w.add_entry(entry, img)
-    else:
-        print("err")
 
 main()
