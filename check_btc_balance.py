@@ -8,7 +8,7 @@ import logging
 
 target_path = ""
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
-                    format='%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(message)s')
+                    format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
 addr_list = []
 addr_list.append("1BitcoinEaterAddressDontSendf59kuE")

@@ -5,9 +5,10 @@ import logging
 
 target_path = ""
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
-                    format='%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(message)s')
+                    format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
 def get_fee(coin):
+    content = 'err'
     if coin == 'eth':
         try:
             url = "https://ethgasstation.info/json/ethgasAPI.json"

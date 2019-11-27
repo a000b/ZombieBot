@@ -1,36 +1,32 @@
 import wypok_bot_lib as w
-import scr_lib, sys
+import scr_lib
+import sys
+import logging
 
+target_path = ""
+logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
+                    format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 def main():
     text = ''
-    if sys.argv[1] == 'dominance_graph':
-        url = 'https://coinmarketcap.com/charts/'
-        selector = "#dominance-percentage"
-    elif sys.argv[1] == 'cme_futures':
-        url = "https://www.cmegroup.com/trading/equity-index/us-index/bitcoin_quotes_volume_voi.html"
-        selector = "#quotesProductPanel"
-#         url = 'https://www.cmegroup.com/trading/equity-index/us-index/bitcoin_quotes_globex.html'
-#         selector = "#quotesFuturesProductTable1"
-    elif sys.argv[1] == 'binance_futures':
-        url = "https://www.coingecko.com/en/exchanges/binance_futures"
-        selector = "table"
-    elif sys.argv[1] == 'google_trends':
-        url = 'https://trends.google.pl/trends/explore?q=bitcoin'
-        selector = "html"
-    elif sys.argv[1] == 'volatility_btc':
-        url = 'https://www.buybitcoinworldwide.com/volatility-index/'
-        selector = "#highchart_simple_div"
-        text += "BTC volatility / price index.\n\n"
-    elif sys.argv[1] == 'defi_pulse':
-        url = 'https://defipulse.com/'
-        # selector = "div.defi-chart"
-        selector = "table.defi-table"
-    else:
-        pass
-
-    scr_lib.take_scr(url, 'scr.png', selector)
-    text += selector + '\nŹródło : ' + url +'\n\n'
-    # w.add_entry(text,'scr.png', 1)
+    try:
+        if sys.argv[1] == 'dominance_graph':
+            url = 'https://coinmarketcap.com/charts/'
+            selector = "#dominance-percentage"
+            text += "BTC dominance graph.\n\n"
+        elif sys.argv[1] == 'volatility_btc':
+            url = 'https://www.buybitcoinworldwide.com/volatility-index/'
+            selector = "#highchart_simple_div"
+            text += "BTC volatility / price index.\n\n"
+        else:
+            logging.error(f"Zly parametr: {sys.argv[1]}")
+    except Exception as e:
+        logging.error(e)
+    try:
+        scr_lib.take_scr(url, target_path + 'scr.png', selector)
+        text += 'Źródło : ' + url +'\n\n'
+        w.add_entry(text, target_path + 'scr.png', 1)
+    except Exception as e:
+        logging.error(e)
 
 
 

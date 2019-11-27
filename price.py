@@ -3,9 +3,10 @@ import logging
 
 target_path = ""
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
-                    format='%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(message)s')
+                    format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
 def get_price(coin):
+    content = 'err'
     if coin == 'btc':
         url ="https://api.coinbase.com/v2/prices/BTC-USD/buy"
         try:
