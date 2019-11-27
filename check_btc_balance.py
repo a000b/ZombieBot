@@ -3,7 +3,12 @@
 import requests
 import pickle
 import wypok_bot_lib as w
+import logging
 
+
+target_path = ""
+logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
+                    format='%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(message)s')
 
 addr_list = []
 addr_list.append("1BitcoinEaterAddressDontSendf59kuE")
@@ -21,7 +26,7 @@ def getbalance(addresses):
         try:
             response = requests.get('https://blockstream.info/api/address/' + addr)
         except Exception as e:
-            pass
+            logging.error(e)
         else:
             if response.status_code == 200:
                 content = response.json()
@@ -30,33 +35,28 @@ def getbalance(addresses):
                 txs_entry = getx(addr)
                 entry = {**entry_balance, **txs_entry}
                 entry_list.append(entry)
-                print(entry_list)
-            else:
-                pass
     return entry_list
 
 def getx(address):
+    entry_tx = {}
     try:
         response = requests.get('https://blockstream.info/api/address/' + address + "/txs")
     except Exception as e:
-        pass
+        logging.error(e)
     else:
         if response.status_code == 200:
             content = response.json()
-            for k, e in enumerate(content):
-                entry_tx = {"last txid" : content[0]["txid"], 'block_height': content[0]["status"]["block_height"], "address" : address}
-        else:
-            pass
+            entry_tx = {"last txid" : content[0]["txid"], 'block_height': content[0]["status"]["block_height"], "address" : address}
     return entry_tx
 
 
 def save_file(dane):
-    with open("balance.pickle", "wb") as plik:
+    with open(target_path + "balance.pickle", "wb") as plik:
         pickle.dump(dane, plik)
 
 
 def read_file():
-    with open("balance.pickle", "rb") as plik:
+    with open(target_path + "balance.pickle", "rb") as plik:
         list_read = pickle.load(plik)
     return list_read
 
@@ -66,18 +66,15 @@ def find_text(search_string):
         found = str(s).find(search_string)
         if found != -1:
             return s['block_height'], s['balance']
-        else:
-            pass
 
 
 def main():
     lista_wpis = []
-    my_mesg = "Palenie BTC;\nsprawdzenie znanych bogus addresses;\nczęstotliwość sprawdzenia 1x24h\n\n"
+    my_mesg = "Palenie BTC\nSprawdzenie znanych bogus(martwych) adresów\nCzęstotliwość sprawdzenia 1x24h\n\n"
     entries = getbalance(addr_list)
 
     if len(entries) != 0:
         for entry in entries:
-            print(entry)
             search_ = find_text(entry["address"])
             if entry['block_height'] != search_[0]:
                 diff_ = float(entry['balance']) - float(search_[1])
@@ -85,15 +82,14 @@ def main():
                 lista_wpis.append(entry)
         if len(lista_wpis) != 0:
             for m in lista_wpis:
-                my_mesg += f"Adres :{m['address']}\n" \
-                    f"Balance :{m['balance']}\n" \
-                    f"Zmiana  :{m['change']}\n" \
-                    f"Last block tx :{m['block_height']}\n" \
+                my_mesg += f"Adres : {m['address']}\n" \
+                    f"Balance : {m['balance']}\n" \
+                    f"Zmiana  : {m['change']}\n" \
+                    f"Last block tx : {m['block_height']}\n" \
                     f"Link : {m['link']} \n\n"
             img = ''
             w.add_entry(my_mesg, img)
-    else:
-        print('err')
+
     save_file(entries)
 
 main()
