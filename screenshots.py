@@ -4,6 +4,8 @@ import sys
 import logging
 
 target_path = ""
+
+
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 def main():
@@ -21,13 +23,14 @@ def main():
             logging.error(f"Zly parametr: {sys.argv[1]}")
     except Exception as e:
         logging.error(e)
-    try:
-        scr_lib.take_scr(url, target_path + 'scr.png', selector)
-        text += 'Źródło : ' + url +'\n\n'
-        w.add_entry(text, target_path + 'scr.png', 1)
-    except Exception as e:
-        logging.error(e)
-
-
+    else:
+        try:
+            pic = scr_lib.take_scr(url, target_path + 'scr.png', selector)
+        except Exception as e:
+            logging.error(e)
+        else:
+            if pic == True:
+                text += 'Źródło : ' + url +'\n\n'
+                w.add_entry(text, target_path + 'scr.png', 1)
 
 main()

@@ -4,6 +4,8 @@ import hashlib
 import logging
 
 target_path = ""
+
+
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
