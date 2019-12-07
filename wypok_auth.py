@@ -5,17 +5,20 @@ import logging
 
 target_path = ""
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
-                    format='%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(message)s')
+                    format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
 def check_usrkey_isvalid(kwargs):
     check = get_pm_conversation(kwargs)
-    if check == 11:
-        r = False
-    elif check == 'err':
-        logging.error('Błąd przy pobieraniu konwersacji')
-    else:
+    if check == 'ok':
         r = True
         logging.info('Wypok token aktualny')
+    elif check == 11:
+        r = False
+        logging.info('Proba aktualizacji tokenu')
+    elif check == 'err':
+        logging.error('Status err przerywam')
+    else:
+        logging.error('Dunno przerywam')
     return r
 
 def sign_data(data):
@@ -48,27 +51,46 @@ def get_pm_conversation(kwargs):
 
         if r.status_code == 200:
             content = r.json()
+            status = 'ok'
+        elif r.status_code == 401:
+            try:
+                content = r.json()
+                status = content['error']['code']
+                logging.warning(f"Token nieaktualny {content['error']['message_en']}")
+            except Exception as e:
+                logging.error(f"Dunno {e}")
+                status = 'err'
         else:
-            content = r.json()['error']['code']
-            logging.error(f"{content}")
-            # print('Err :', r.status_code)
+            content = r.json()
+            logging.warning(f"Dunno {content}")
+            status = 'err'
     except Exception as e:
-        content = 'err'
+        status = 'err'
         logging.error(f'{e}')
 
-    return content
+    return status
 
 
 def load_file(fname):
-    with open(fname, "rb", ) as p:
-        auth_data = pickle.load(p)
+    try:
+        f = open(fname, "rb", )
+    except Exception as e:
+        logging.error(f"{e}")
+        auth_data = ""
+    else:
+        auth_data = pickle.load(f)
+        logging.info(f'Otwarto plik {fname}')
+        f.close()
     return auth_data
 
 
 def save_file(fname, new_parms):
-    with open(fname, "wb") as p:
-        pickle.dump(new_parms, p)
-
+    try:
+        with open(fname, "wb") as p:
+            pickle.dump(new_parms, p)
+            logging.info(f'Zapisano plik {fname}')
+    except Exception as e:
+        logging.error(f"{e}")
 
 def update_usr_key(fname, kwargs):
     newkey = get_token(kwargs)

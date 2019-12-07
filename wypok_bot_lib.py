@@ -5,7 +5,7 @@ import wypok_auth as w
 import logging
 target_path = ""
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
-                    format='%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(message)s')
+                    format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
 def load_parms():
     pickle_f = 'parms.pickle'
@@ -41,6 +41,3 @@ def add_entry(text, img, mode=0):
             logging.info(f"{text[:5]}")
         except Exception as e:
             logging.error(f"{e}{text[:5]}")
-
-
-
