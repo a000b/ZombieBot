@@ -6,7 +6,6 @@ import logging
 
 target_path = ""
 
-
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
@@ -22,8 +21,7 @@ def load_parms():
 def add_entry(text, img, mode=0):
     my_pickle = load_parms()
     podpis = "\n\nhttps://github.com/a000b/ZombieBot\n\n"
-    # tagi = "#bitcoin #kryptowaluty #zombiebot"
-    tagi = "#testbot"
+    tagi = "#bitcoin #kryptowaluty #zombiebot"
     entry = text + podpis + tagi
     url = f"https://a2.wykop.pl/Entries/Add/appkey/{my_pickle['appkey']}/token/{my_pickle['usrkey']}/userkey/{my_pickle['usrkey']}/"
 
@@ -33,9 +31,9 @@ def add_entry(text, img, mode=0):
         tajny = f"{my_pickle['secret']}{url}{entry},{img}"
         try:
             r = requests.post(url, data=data, headers=w.sign_data(tajny))
-            logging.info(f"{text[:5]} |https://www.wykop.pl/wpis/{r.json()['data']['id']}/")
+            logging.info(f"{text[:10]} |https://www.wykop.pl/wpis/{r.json()['data']['id']}/")
         except Exception as e:
-            logging.error(f"{e}{text[:5]}")
+            logging.error(f"{e}{text[:10]}")
     else:
         myfiles = {'embed': (img, open(img ,'rb'), 'image/png')}
         data = {'body': entry}
@@ -44,4 +42,4 @@ def add_entry(text, img, mode=0):
             r = requests.post(url, data=data, files=myfiles, headers=w.sign_data(tajny))
             logging.info(f"{text[:10]} |https://www.wykop.pl/wpis/{r.json()['data']['id']}/")
         except Exception as e:
-            logging.error(f"{e}{text[:5]}")
+            logging.error(f"{e}{text[:10]}")
