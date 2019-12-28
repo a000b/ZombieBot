@@ -45,28 +45,32 @@ def create_entry():
     providers = []
     tokens.append('USDC')
     tokens.append("DAI")
+    tokens.append("SAI")
     providers.append('CompoundV2')
     providers.append('dYdX')
     entry = wstep
+    success_rate = 0
 
     for token in tokens:
-        text = ""
         token_data = get_data(token)
         if token_data != 'err':
-            try:
-                for item in token_data:
-                    if (item['provider'] in providers):
+            for item in token_data:
+                if (item['provider'] in providers):
+                    try:
                         irate = round(float(item['supply'][0]['rate']) * 100, 2)
-                        text += f"{item['supply'][0]['symbol']} {item['provider']} : {irate} %\n"
-            except Exception as e:
-                logging.error(e)
-                entry = 'err'
-            else:
-                entry += text
+                        text = f"{item['supply'][0]['symbol']} {item['provider']} : {irate} %\n"
+                        success_rate += 1
+                    except IndexError:
+                        logging.warning(f"{item['provider']} {token} Nie listowany")
+                    except Exception as e:
+                        logging.error(f"{item['provider']} {token} {e}")
+                    else:
+                        entry += text
 
-    if entry != 'err':
+    if success_rate > 0:
         entry += f"\nŹródło: {url}"
-
+    else:
+        entry = "err"
     return entry
 
 def main():
@@ -76,6 +80,5 @@ def main():
        img = ''
        w = wypok_bot_lib
        w.add_entry(entry, img)
-
 
 main()
