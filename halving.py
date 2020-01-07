@@ -3,6 +3,7 @@ import logging
 
 
 target_path = ""
+
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
@@ -40,7 +41,7 @@ def get_halving_info():
         blocks_left = calculate_remaining_blocks(block)
         days_left = calculate_remaining_days(blocks_left)
         minutes_left = calculate_remaining_minutes(blocks_left)
-        halving_info = {"hinfo": f"Do havlingu pozostało {blocks_left} bloków, {days_left} dni i {minutes_left} minut."}
+        halving_info = {"hinfo": f"Do halvingu pozostało {blocks_left} bloków, {days_left} dni i {minutes_left} minut."}
     else:
         halving_info = {"hinfo": f"err"}
 
