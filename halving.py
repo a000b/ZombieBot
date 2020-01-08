@@ -34,8 +34,8 @@ def calculate_remaining_minutes(remained_blocks):
     return int((remained_blocks - (remained_blocks // 144 * 144)) * 10)
 
 
-def calculate_halving_date(days_to_halving):
-    return datetime.date.today() + datetime.timedelta(days=days_to_halving)
+def calculate_halving_date(days_to_halving, minutes):
+    return (datetime.datetime.now() + datetime.timedelta(days=days_to_halving, minutes=minutes)).strftime('%A, %d %B %Y, godz. %H:%M UTC')
 
 def get_halving_info():
     halving_info = {}
@@ -44,7 +44,7 @@ def get_halving_info():
         blocks_left = calculate_remaining_blocks(block)
         days_left = calculate_remaining_days(blocks_left)
         minutes_left = calculate_remaining_minutes(blocks_left)
-        halving_date = calculate_halving_date(days_left)
+        halving_date = calculate_halving_date(days_left, minutes_left)
         halving_info = {"hinfo": f"Do havlingu pozostało {blocks_left} bloków, {days_left} dni i {minutes_left} minut.\n"
                                  f"Przewidywana data: {halving_date}"}
     else:
