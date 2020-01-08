@@ -51,5 +51,3 @@ def get_halving_info():
         halving_info = {"hinfo": f"err"}
 
     return halving_info
-
-get_halving_info()
