@@ -5,6 +5,7 @@ import datetime
 import wypok_bot_lib as w
 
 target_path = ""
+
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
@@ -46,6 +47,14 @@ def create_entry():
     roi= calculate_roi(initial_amounts)
     info = get_halving_info()
     if roi[0] != 'err' and info['hinfo'] != "err":
+
+        if float(roi[1]) > 0 and float(roi[3]) > 0:
+            img = "moon_indicator.png"
+        elif float(roi[1]) < 0 and float(roi[3]) < 0:
+            img = "rekt_indicator.png"
+        else:
+            img = "neutral_indicator.png"
+
         entry = f"HODL {fun_days.days} dzień zabawy.\n" \
                f"Zainwestowano po 100 000 PLN w BTC i ETH w dniu {investment_date}\n" \
                f"ROI BTC: {roi[1]}%\n" \
@@ -60,12 +69,11 @@ def create_entry():
                f"Ceny z https://api.pro.coinbase.com/"
     else:
         entry = "err"
-    return entry
+    return entry, img
 
 def main():
     wpis = create_entry()
     if wpis != 'err':
-       img = ''
-       w.add_entry(wpis, img)
+       w.add_entry(wpis[0], target_path + wpis[1], 1)
 
 main()

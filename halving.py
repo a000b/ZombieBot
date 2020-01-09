@@ -45,7 +45,7 @@ def get_halving_info():
         days_left = calculate_remaining_days(blocks_left)
         minutes_left = calculate_remaining_minutes(blocks_left)
         halving_date = calculate_halving_date(days_left, minutes_left)
-        halving_info = {"hinfo": f"Do havlingu pozostało {blocks_left} bloków, {days_left} dni i {minutes_left} minut.\n"
+        halving_info = {"hinfo": f"Do halvingu pozostało {blocks_left} bloków, {days_left} dni i {minutes_left} minut.\n"
                                  f"Przewidywana data: {halving_date}"}
     else:
         halving_info = {"hinfo": f"err"}
