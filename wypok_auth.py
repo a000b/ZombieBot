@@ -3,8 +3,6 @@ import requests
 import hashlib
 import logging
 
-target_path = ""
-
 
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
@@ -13,13 +11,15 @@ def check_usrkey_isvalid(kwargs):
     check = get_pm_conversation(kwargs)
     if check == 'ok':
         r = True
-        logging.info('Wypok token aktualny')
+       # logging.info('Wypok token aktualny')
     elif check == 11:
         r = False
         logging.info('Proba aktualizacji tokenu')
     elif check == 'err':
+        r = False
         logging.error('Status err przerywam')
     else:
+        r = False
         logging.error('Dunno przerywam')
     return r
 
@@ -81,7 +81,7 @@ def load_file(fname):
         auth_data = ""
     else:
         auth_data = pickle.load(f)
-        logging.info(f'Otwarto plik {fname}')
+       # logging.info(f'Otwarto plik {fname}')
         f.close()
     return auth_data
 

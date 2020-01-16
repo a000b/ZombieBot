@@ -5,6 +5,7 @@ import wypok_auth as w
 import logging
 
 target_path = ""
+
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
@@ -49,11 +50,12 @@ def read_notifications():
     tajny = f"{my_pickle['secret']}{url}"
     try:
         r = requests.get(url, headers=w.sign_data(tajny))
+        text = r.text
         content = r.json()['data']
         count_mesgs = len(content)
-        logging.info(f"{count_mesgs} notifications on page")
+       # logging.info(f"{count_mesgs} notifications on page")
     except Exception as e:
-        logging.error(f"{e}{content}")
+        logging.error(f"{e}{text}")
     return content
 
 
@@ -88,9 +90,10 @@ def mark_as_read_notifications():
     tajny = f"{my_pickle['secret']}{url}"
     try:
         r = requests.get(url, headers=w.sign_data(tajny))
-        logging.info(f"All marked as read: ok")
+       # logging.info(f"All marked as read: ok")
+        text = r.text
         status = r.json()
     except Exception as e:
-        logging.error(f"{e}")
+        logging.error(f"{e} {text}")
         status = 'err'
     return status
