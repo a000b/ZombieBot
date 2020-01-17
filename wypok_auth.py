@@ -3,23 +3,23 @@ import requests
 import hashlib
 import logging
 
-
+target_path = ""
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
 def check_usrkey_isvalid(kwargs):
     check = get_pm_conversation(kwargs)
     if check == 'ok':
-        r = True
+        r = 0
        # logging.info('Wypok token aktualny')
     elif check == 11:
-        r = False
+        r = 1
         logging.info('Proba aktualizacji tokenu')
     elif check == 'err':
-        r = False
+        r = 2
         logging.error('Status err przerywam')
     else:
-        r = False
+        r = 3
         logging.error('Dunno przerywam')
     return r
 
@@ -100,4 +100,6 @@ def update_usr_key(fname, kwargs):
         kwargs['usrkey'] = newkey
         save_file(fname, kwargs)
         logging.info(f'Wypok token updated')
+        return True
+    return False
 
