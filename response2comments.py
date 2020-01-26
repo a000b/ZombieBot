@@ -63,7 +63,7 @@ def get_notifications():
                         entry = f'Coś poszło nie tak, nie mogę ściągnąć ceny ;( '
                 elif  replay[0] == None:
                     answer = cs.parse_response(cs.google_search_wypok(replay[1]))
-                    if replay != "err":
+                    if answer != "err":
                         entry = f'Dziękuję za komentarz/pytanie.\n' \
                                 f'Niestety nie rozumiem jego treści.\n' \
                                 f'Może tu znajdziesz odpowiedzi:\n' \
