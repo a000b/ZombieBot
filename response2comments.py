@@ -9,7 +9,6 @@ import answer_dic
 
 
 target_path = ""
-
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
@@ -61,10 +60,10 @@ def get_notifications():
                         entry = f'Ostania cena ask ETH na coinbase pro: {current_priceeth} $ '
                     else:
                         entry = f'Coś poszło nie tak, nie mogę ściągnąć ceny ;( '
-                elif  replay[0] == None:
+                elif  replay[0] == "Not found":
                     answer = cs.parse_response(cs.google_search_wypok(replay[1]))
                     if answer != "err":
-                        entry = f'Dziękuję za komentarz/pytanie.\n' \
+                        entry = f'{user}: Dziękuję za komentarz/pytanie.\n' \
                                 f'Niestety nie rozumiem jego treści.\n' \
                                 f'Może tu znajdziesz odpowiedzi:\n' \
                                 f'{answer}\n' \
@@ -88,7 +87,7 @@ def parse_comment(comment):
     cleanbody = newbody.replace("@atari_xe:","").replace("#bitcoin", "").\
         replace("#kryptowaluty", "").replace("#zombiebot","").\
         replace(":", "").strip()
-    answer = answer_dic.get_answer(cleanbody)
+    answer = answer_dic.get_answer(f'{cleanbody}')
     return (answer, cleanbody)
 
 
