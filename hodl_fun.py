@@ -69,11 +69,12 @@ def create_entry():
                f"Ceny z https://api.pro.coinbase.com/"
     else:
         entry = "err"
+        img = ""
     return entry, img
 
 def main():
     wpis = create_entry()
-    if wpis != 'err':
+    if wpis[0] != 'err':
        w.add_entry(wpis[0], target_path + wpis[1], 1)
 
 main()

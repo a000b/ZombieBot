@@ -6,7 +6,7 @@ import logging
 
 
 target_path = ""
-
+target_path = ""
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
@@ -17,8 +17,8 @@ async def get_img(*args):
 
     try:
         await page.setViewport({'width': 2048, 'height': 1536});
-        # await page.goto(args[0][0], {'waitUntil' : 'networkidle2'})
         await page.goto(args[0][0], {'timeout': '100000'})
+        #await page.goto(args[0][0], {'waitUntil' : 'networkidle2'})
         time.sleep(5)
     except Exception as e:
         logging.error(f"File not saved for {args[0][2]} - {e}")

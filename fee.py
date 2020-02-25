@@ -57,7 +57,7 @@ def btc_fee(dane):
     if dane != 'err':
         priceb = price.get_price('btc')
         if priceb != 'err':
-            p = 'Price (Coinbase) : ' + str(priceb) + ' USD\n'
+            p = 'Fee comparison\nPrice (Coinbase) : ' + str(priceb) + ' USD\n'
             fcost = str(round(float(dane['fastestFee']) * size * priceb / s,4)) + ' USD'
             hcost = str(round(float(dane['halfHourFee']) * size * priceb / s,4)) + ' USD'
             ocost = str(round(float(dane['hourFee']) * size * priceb / s,4)) + ' USD'
@@ -81,7 +81,6 @@ def main():
    if b != 'err' and e != 'err':
        entry = b + "\n\n" + e +"\n"
        img = ''
-       print(entry)
        w.add_entry(entry, img)
 
 main()

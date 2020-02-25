@@ -3,8 +3,9 @@ import scr_lib
 import sys
 import logging
 
+# target_path = ""
 target_path = ""
-
+# target_path = "/home/m4/MyApp/py/Bot/"
 
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')

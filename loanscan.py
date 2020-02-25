@@ -4,7 +4,7 @@ import logging
 import wypok_bot_lib
 
 target_path = ""
-
+target_path = ""
 
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
@@ -48,6 +48,7 @@ def create_entry():
     tokens.append("SAI")
     providers.append('CompoundV2')
     providers.append('dYdX')
+    providers.append('MakerDaoV2')
     entry = wstep
     success_rate = 0
 
@@ -78,7 +79,8 @@ def main():
     if entry != 'err':
        entry = entry +"\n\n"
        img = ''
-       w = wypok_bot_lib
-       w.add_entry(entry, img)
+       print(entry)
+       # w = wypok_bot_lib
+       # w.add_entry(entry, img)
 
 main()

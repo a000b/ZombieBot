@@ -1,4 +1,4 @@
-import requests, json, datetime
+import requests, json, datetime, os
 import wypok_bot_lib
 
 def read_file(filename):
@@ -8,7 +8,8 @@ def read_file(filename):
 
 def search_yt_latest_vid(searchtext, dn):
     global API_KEY
-    API_KEY = read_file("client_secret.json")["key"]
+    fpath = str(os.getcwd() + '/myfiles/' + "client_secret.json")
+    API_KEY = read_file(fpath)["key"]
     dzis = datetime.date.today()
     data_od = str(dzis - datetime.timedelta(int(dn)))
     data_do = str(dzis)
@@ -74,8 +75,7 @@ def main():
     if yt != 'err':
        entry = yt +"\n\n"
        img = ''
-#        print(entry)
+#       print(entry)
        w = wypok_bot_lib
        w.add_entry(entry, img)
-#        
 main()

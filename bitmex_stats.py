@@ -10,12 +10,12 @@ logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
 locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
 def save_file(dane):
-    with open("turnover.pickle", "wb") as plik:
+    with open(target_path + "turnover.pickle", "wb") as plik:
         pickle.dump(dane, plik)
 
 
 def read_file():
-    with open("turnover.pickle", "rb") as plik:
+    with open(target_path + "turnover.pickle", "rb") as plik:
         list_read = pickle.load(plik)
     return list_read
 
@@ -57,4 +57,4 @@ def main():
         img = ''
         w.add_entry(entry, img)
 
-main()
+#main()

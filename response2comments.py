@@ -6,6 +6,8 @@ import CS_YT as cs
 import datetime
 import halving
 import answer_dic
+import eth_
+import nbp_api
 
 
 target_path = ""
@@ -21,11 +23,14 @@ def get_notifications():
     new = False
 
     if mesgs != "err":
+        status = True
         for m in mesgs:
             id = m['id']
             user = f"@{m['author']['login']}"
             post = m['item_id']
             new = m['new']
+            mtyp = m['type']
+
             try:
                 commentid = m['subitem_id']
                 type = 1
@@ -33,7 +38,7 @@ def get_notifications():
                 commentid = ""
                 type = 2
 
-            if new == True:
+            if new == True and mtyp != 'pm':
 
                 if type == 1:
                     logging.info(f'{id} {user} {post} {commentid}')
@@ -60,6 +65,16 @@ def get_notifications():
                         entry = f'Ostania cena ask ETH na coinbase pro: {current_priceeth} $ '
                     else:
                         entry = f'Coś poszło nie tak, nie mogę ściągnąć ceny ;( '
+                elif replay[0] == "newethaccount":
+                    entry = eth_.prepare_answer()
+                elif replay[0] == "goldprice":
+                    nbp_content = nbp_api.queryNBP(nbp_api.build_url(replay[0]))
+                    if nbp_content[0] == 'ok':
+                        for item in nbp_content[1]:
+                            data_ceny = item['data']
+                            cena = item['cena']
+                            entry = f'Cena złota z {data_ceny} wynosi {cena} PLN.\n\n' \
+                                    f'Źródło: https://api.nbp.pl'
                 elif  replay[0] == "Not found":
                     answer = cs.parse_response(cs.google_search_wypok(replay[1]))
                     if answer != "err":
@@ -77,9 +92,8 @@ def get_notifications():
                 w.add_comments(user, post, entry, img='')
     else:
         logging.info(f'Error podczas czytania powiadomien')
-    # print(entry)
-    #if new == False:
-     #   logging.info(f'No new notifications')
+        status = False
+    return status
 
 def parse_comment(comment):
     body =  comment['data']['body']
@@ -92,7 +106,9 @@ def parse_comment(comment):
 
 
 def main():
-    get_notifications()
-    w.mark_as_read_notifications()
+    if get_notifications():
+        w.mark_as_read_notifications()
 
 main()
+
+

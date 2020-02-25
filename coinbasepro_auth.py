@@ -4,6 +4,7 @@ import logging
 
 
 target_path = ""
+target_path = ""
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
@@ -44,7 +45,7 @@ def read_file(filename):
     return d
 
 def get_auth_params():
-    auth_file = read_file("auth_coinbasepro.json")
+    auth_file = read_file(target_path  + "auth_coinbasepro.json")
 
     if auth_file != "err":
         API_KEY = auth_file["API_KEY"]

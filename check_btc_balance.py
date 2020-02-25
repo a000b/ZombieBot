@@ -22,6 +22,7 @@ def getbalance(addresses):
     entry = {}
     entry_balance = {}
     balance = 0
+    content = 'err'
     for addr in addresses:
         try:
             response = requests.get('https://blockstream.info/api/address/' + addr)
@@ -29,15 +30,20 @@ def getbalance(addresses):
             logging.error(e)
         else:
             if response.status_code == 200:
-                content = response.json()
-                balance = (int(content['chain_stats']['funded_txo_sum']) - int(content['chain_stats']['spent_txo_sum'])) / 10**8
-                entry_balance = {'link' : 'https://blockstream.info/address/' + addr, 'balance' : balance}
-                txs_entry = getx(addr)
-                entry = {**entry_balance, **txs_entry}
-                entry_list.append(entry)
+                try:
+                    content = response.json()
+                    balance = (int(content['chain_stats']['funded_txo_sum']) - int(content['chain_stats']['spent_txo_sum'])) / 10**8
+                    entry_balance = {'link' : 'https://blockstream.info/address/' + addr, 'balance' : balance}
+                    txs_entry = getx(addr)
+                    entry = {**entry_balance, **txs_entry}
+                    entry_list.append(entry)
+                except Exception as e:
+                    logging.error(e)
+                    logging.error(content)
     return entry_list
 
 def getx(address):
+    content = 'err'
     entry_tx = {}
     try:
         response = requests.get('https://blockstream.info/api/address/' + address + "/txs")
@@ -45,8 +51,12 @@ def getx(address):
         logging.error(e)
     else:
         if response.status_code == 200:
-            content = response.json()
-            entry_tx = {"last txid" : content[0]["txid"], 'block_height': content[0]["status"]["block_height"], "address" : address}
+            try:
+                content = response.json()
+                entry_tx = {"last txid" : content[0]["txid"], 'block_height': content[0]["status"]["block_height"], "address" : address}
+            except Exception as e:
+                logging.error(e)
+                logging.error(content)
     return entry_tx
 
 
@@ -70,7 +80,7 @@ def find_text(search_string):
 
 def main():
     lista_wpis = []
-    my_mesg = "Palenie BTC\nSprawdzenie znanych bogus(martwych) adresów\nCzęstotliwość sprawdzenia 1x24h\n\n"
+    my_mesg = "Palenie BTC\nSprawdzenie znanych bogus(martwych) adresów\nCzęstotliwość sprawdzenia 1xweek\n\n"
     entries = getbalance(addr_list)
 
     if len(entries) != 0:

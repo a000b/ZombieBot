@@ -116,3 +116,37 @@ def mark_as_read_notifications():
         return status
     else:
         return "err"
+
+def get_comment(commentid):
+    my_pickle = load_parms()
+    if my_pickle != "err":
+        url = f"https://a2.wykop.pl/Entries/Comment/{commentid}/{my_pickle['login']}/appkey/{my_pickle['appkey']}/userkey/{my_pickle['usrkey']}/"
+        tajny = f"{my_pickle['secret']}{url}"
+        try:
+            r = requests.get(url, headers=w.sign_data(tajny))
+           # logging.info(f"All marked as read: ok")
+            text = r.text
+            status = r.json()
+        except Exception as e:
+            logging.error(f"{e} {text}")
+            status = 'err'
+        return status
+    else:
+        return "err"
+
+def get_entry(entryid):
+    my_pickle = load_parms()
+    if my_pickle != "err":
+        url = f"https://a2.wykop.pl/Entries/Entry/{entryid}/{my_pickle['login']}/appkey/{my_pickle['appkey']}/userkey/{my_pickle['usrkey']}/"
+        tajny = f"{my_pickle['secret']}{url}"
+        try:
+            r = requests.get(url, headers=w.sign_data(tajny))
+           # logging.info(f"All marked as read: ok")
+            text = r.text
+            status = r.json()
+        except Exception as e:
+            logging.error(f"{e} {text}")
+            status = 'err'
+        return status
+    else:
+        return "err"
