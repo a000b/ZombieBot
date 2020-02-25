@@ -22,13 +22,13 @@ def calculate_roi(initial_amounts):
 
     if current_pricebtc != "err":
         current_value_btc = round(float(initial_amounts[1]) * float(current_pricebtc), 4)
-        roi_btc = round(((current_value_btc - float(initial_amounts[0])) / current_value_btc) * 100, 4)
+        roi_btc = round(((current_value_btc - float(initial_amounts[0])) / float(initial_amounts[0])) * 100, 4)
     else:
         roi_btc = 'err'
 
     if current_priceeth != "err":
         current_value_eth = round(float(initial_amounts[2]) * float(current_priceeth), 4)
-        roi_eth = round(((current_value_eth - float(initial_amounts[0])) / current_value_eth)* 100, 4)
+        roi_eth = round(((current_value_eth - float(initial_amounts[0])) / float(initial_amounts[0]))* 100, 4)
     else:
         roi_eth = 'err'
     return current_pricebtc, roi_btc, current_priceeth, roi_eth
