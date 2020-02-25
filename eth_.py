@@ -42,5 +42,3 @@ def prepare_answer():
         return f'Twoje konto:\nhttps://rinkeby.etherscan.io/address/{address}\nKlucz prywatny: {priv_key[2:]}'
     else:
         return f'Coś poszło nie tak ;('
-
-print(prepare_answer())
