@@ -98,10 +98,20 @@ def get_notifications():
 def parse_comment(comment):
     body =  comment['data']['body']
     newbody = BeautifulSoup(body, "lxml").text.lower()
+    # newbody = comment.lower()
     cleanbody = newbody.replace("@atari_xe:","").replace("#bitcoin", "").\
         replace("#kryptowaluty", "").replace("#zombiebot","").\
         replace(":", "").strip()
-    answer = answer_dic.get_answer(f'{cleanbody}')
+    if cleanbody[:8] == 'solidity':
+        try:
+            answer = f'{eth_.get_answer_from_blokchain(cleanbody[8:])}\n\n' \
+                 f'Odpowiedź pobrana z blockczejn\n{eth_.get_contract_url()}' \
+                 f'\nBitcoin tak nie potrafi ;)'
+        except Exception as e:
+            logging.error(e)
+            answer = 'Not found'
+    else:
+        answer = answer_dic.get_answer(f'{cleanbody}')
     return (answer, cleanbody)
 
 
@@ -111,4 +121,4 @@ def main():
 
 main()
 
-
+# print(parse_comment("@atari_xe:solidity:dziekuje")[0])
