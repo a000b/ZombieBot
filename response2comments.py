@@ -98,7 +98,6 @@ def get_notifications():
 def parse_comment(comment):
     body =  comment['data']['body']
     newbody = BeautifulSoup(body, "lxml").text.lower()
-    # newbody = comment.lower()
     cleanbody = newbody.replace("@atari_xe:","").replace("#bitcoin", "").\
         replace("#kryptowaluty", "").replace("#zombiebot","").\
         replace(":", "").strip()
@@ -121,4 +120,3 @@ def main():
 
 main()
 
-# print(parse_comment("@atari_xe:solidity:dziekuje")[0])
