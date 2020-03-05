@@ -48,6 +48,10 @@ def add_to_dict() -> dict:
     ANSWERS_DICT['ile kosztuje zloto'] = "goldprice"
     ANSWERS_DICT['po ile zloto'] = "goldprice"
     ANSWERS_DICT['cene zlota'] = "goldprice"
+    ANSWERS_DICT['roll the dice'] = "rollthedice"
+    ANSWERS_DICT['rzuc kostka'] = "rollthedice"
+    ANSWERS_DICT['rzuc kosci'] = "rollthedice"
+    ANSWERS_DICT['rzuc kostki'] = "rollthedice"
     return ANSWERS_DICT
 
 

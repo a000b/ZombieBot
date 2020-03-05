@@ -8,9 +8,9 @@ import halving
 import answer_dic
 import eth_
 import nbp_api
+import game_roll_the_dice as gdice
 
-
-target_path = ""
+target_path = "/home/maciej/myfiles/"
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
@@ -75,6 +75,13 @@ def get_notifications():
                             cena = item['cena']
                             entry = f'Cena złota z {data_ceny} wynosi {cena} PLN.\n\n' \
                                     f'Źródło: https://api.nbp.pl'
+                elif replay[0] == "rollthedice":
+                    p = user[1:]
+                    player = gdice.Player(p)
+                    house = gdice.Player("House")
+                    game = gdice.Game(gdice.Dice(), player, house)
+                    game.play()
+                    entry = f'{user}: Kostki zostały rzucone:\n{player}\n{house}\n{game}'
                 elif  replay[0] == "Not found":
                     answer = cs.parse_response(cs.google_search_wypok(replay[1]))
                     if answer != "err":
