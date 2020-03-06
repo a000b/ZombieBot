@@ -2,7 +2,7 @@ import unicodedata
 from typing import Dict
 import logging
 
-target_path: str = "/home/maciej/myfiles/"
+target_path: str = ""
 
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
@@ -17,7 +17,7 @@ def add_to_dict() -> dict:
     ANSWERS_DICT['czesc'] = "Cześć :)"
     ANSWERS_DICT['hej'] = "Hej :)"
     ANSWERS_DICT['co slychac'] = "Nie wiem nie mam uszu"
-    ANSWERS_DICT['gdzie jest cyber'] = "Cyber dzban dostał ban XD"
+    ANSWERS_DICT['gdzie jest cyber'] = "Cyber is dead like Zed"
     ANSWERS_DICT['kim jestes'] = "Jestem prostym botem"
     ANSWERS_DICT['pokaz cycki'] = "Nie :P"
     ANSWERS_DICT['gdzie jest loza'] = "Na junta.pl"
@@ -35,8 +35,8 @@ def add_to_dict() -> dict:
     ANSWERS_DICT['cenę eth'] = "eth price"
     ANSWERS_DICT['cene eth'] = "eth price"
     ANSWERS_DICT['cena eth'] = "eth price"
-    ANSWERS_DICT['wraca cyber'] = "cyberreturn"
-    ANSWERS_DICT['powrot cybera'] = "cyberreturn"
+    ANSWERS_DICT['wraca cyber'] = "Cyber is dead like Zed"
+    ANSWERS_DICT['powrot cybera'] = "Cyber is dead like Zed"
     ANSWERS_DICT['halving btc'] = "halving"
     ANSWERS_DICT['halwing btc'] = "halving"
     ANSWERS_DICT['halving bitcoina'] = "halving"
