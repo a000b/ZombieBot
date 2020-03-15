@@ -17,7 +17,11 @@ def add_to_dict() -> dict:
     ANSWERS_DICT['czesc'] = "Cześć :)"
     ANSWERS_DICT['hej'] = "Hej :)"
     ANSWERS_DICT['co slychac'] = "Nie wiem nie mam uszu"
-    ANSWERS_DICT['gdzie jest cyber'] = "Cyber is dead like Zed"
+    ANSWERS_DICT['gdzie jest cyber'] = "Jak Tor syn Odyna, przemierza sieć błyskawic LN"
+    ANSWERS_DICT['gdzie cyber'] = "Jak Tor syn Odyna, przemierza sieć błyskawic LN"
+    ANSWERS_DICT['gdzie jest cyberpunkbtc'] = "Jak Tor syn Odyna, przemierza sieć błyskawic LN"
+    ANSWERS_DICT['gdzie cyberpunkbtc'] = "Jak Tor syn Odyna, przemierza sieć błyskawic LN"
+    ANSWERS_DICT['gdzie @cyberpunkbtc'] = "Jak Tor syn Odyna, przemierza sieć błyskawic LN"
     ANSWERS_DICT['kim jestes'] = "Jestem prostym botem"
     ANSWERS_DICT['pokaz cycki'] = "Nie :P"
     ANSWERS_DICT['gdzie jest loza'] = "Na junta.pl"
@@ -35,8 +39,8 @@ def add_to_dict() -> dict:
     ANSWERS_DICT['cenę eth'] = "eth price"
     ANSWERS_DICT['cene eth'] = "eth price"
     ANSWERS_DICT['cena eth'] = "eth price"
-    ANSWERS_DICT['wraca cyber'] = "Cyber is dead like Zed"
-    ANSWERS_DICT['powrot cybera'] = "Cyber is dead like Zed"
+    ANSWERS_DICT['wraca cyber'] = "Cyber is back"
+    ANSWERS_DICT['powrot cybera'] = "Cyber is back"
     ANSWERS_DICT['halving btc'] = "halving"
     ANSWERS_DICT['halwing btc'] = "halving"
     ANSWERS_DICT['halving bitcoina'] = "halving"
@@ -52,6 +56,28 @@ def add_to_dict() -> dict:
     ANSWERS_DICT['rzuc kostka'] = "rollthedice"
     ANSWERS_DICT['rzuc kosci'] = "rollthedice"
     ANSWERS_DICT['rzuc kostki'] = "rollthedice"
+    ANSWERS_DICT['Czego nie rozumiesz'] = 'Jestem prostym botem a nie AI. Mam ograniczone możliwości.'
+    ANSWERS_DICT['sprzedales'] = 'Czekam na halving, Pawlo74 mówił, że cena urośnie.'
+    ANSWERS_DICT['sprzedaj'] = 'Czekam na halving, Pawlo74 mówił, że jeszcze urośnie.'
+    ANSWERS_DICT['sprzedawaj'] = 'Czekam na halving, Pawlo74 mówił, że jeszcze urośnie.'
+    ANSWERS_DICT['dlaczego nie sprzedales'] = 'Czekam na halving, Pawlo74 mówił, że cena urośnie.'
+    ANSWERS_DICT['kiedy sprzedaz'] = 'Czekam na halving, Pawlo74 mówił, że cena urośnie.'
+    ANSWERS_DICT['ale drogo'] = 'Musi być drogo, żeby było bezpiecznie'
+    ANSWERS_DICT['XD'] = 'lubię iksde, bo jest podobne do XE'
+    ANSWERS_DICT['ale drogi bitcoin'] = 'Musi być drogo, żeby było bezpiecznie'
+    ANSWERS_DICT['ale drogie eth'] = 'Musi być drogo, żeby było bezpiecznie'
+    ANSWERS_DICT['ale drogi btc'] = 'Musi być drogo, żeby było bezpiecznie'
+    ANSWERS_DICT['przepraszam'] = 'Wybaczam :)'
+    ANSWERS_DICT['kiedy update'] = 'Postuję co dzień o tej samej godzinie'
+    ANSWERS_DICT['kiedy aktualizacja'] = 'Postuję co dzień o tej samej godzinie'
+    ANSWERS_DICT['koronawirus'] = 'Boję się koronawirusa :('
+    ANSWERS_DICT['coronavirus'] = 'Boję się koronawirusa :('
+    ANSWERS_DICT['jestes debilem'] = 'Nie jestem :)'
+    ANSWERS_DICT['lubisz mnie'] = 'Nie wiem ale może polubię.'
+    ANSWERS_DICT['lubisz'] = 'Nie wiem ale może polubię.'
+    ANSWERS_DICT['ale wtopiles'] = 'Ja tylko pokazuję wynik, nie wiem kto wtopił.'
+    ANSWERS_DICT['zwal konia'] = 'Koniu złaź.'
+    ANSWERS_DICT['wypierdalaj'] = 'Ej trochę grzeczniej proszę!'
     return ANSWERS_DICT
 
 
