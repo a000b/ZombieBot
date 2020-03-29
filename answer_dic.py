@@ -1,8 +1,10 @@
 import unicodedata
 from typing import Dict
 import logging
+import eth_
 
-target_path: str = ""
+
+target_path = ""
 
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
@@ -56,11 +58,11 @@ def add_to_dict() -> dict:
     ANSWERS_DICT['rzuc kostka'] = "rollthedice"
     ANSWERS_DICT['rzuc kosci'] = "rollthedice"
     ANSWERS_DICT['rzuc kostki'] = "rollthedice"
-    ANSWERS_DICT['Czego nie rozumiesz'] = 'Jestem prostym botem a nie AI. Mam ograniczone możliwości.'
+    ANSWERS_DICT['czego nie rozumiesz'] = 'Jestem prostym botem a nie AI. Mam ograniczone możliwości.'
     ANSWERS_DICT['sprzedales'] = 'Czekam na halving, Pawlo74 mówił, że cena urośnie.'
     ANSWERS_DICT['sprzedaj'] = 'Czekam na halving, Pawlo74 mówił, że jeszcze urośnie.'
     ANSWERS_DICT['sprzedawaj'] = 'Czekam na halving, Pawlo74 mówił, że jeszcze urośnie.'
-    ANSWERS_DICT['dlaczego nie sprzedales'] = 'Czekam na halving, Pawlo74 mówił, że cena urośnie.'
+    ANSWERS_DICT['dlaczego nie sprzedales'] = 'Czekam na halving, Pawlo74 mówił, że jeszcze urośnie.'
     ANSWERS_DICT['kiedy sprzedaz'] = 'Czekam na halving, Pawlo74 mówił, że cena urośnie.'
     ANSWERS_DICT['ale drogo'] = 'Musi być drogo, żeby było bezpiecznie'
     ANSWERS_DICT['XD'] = 'lubię iksde, bo jest podobne do XE'
@@ -83,9 +85,75 @@ def add_to_dict() -> dict:
 
 def remove_polish_chars(text: str) -> str:
     """ Changing to ascii characters"""
-    return str(unicodedata.normalize('NFKD', text)
-               .replace(u'ł', 'l').replace(u'Ł', 'L').
-               encode('ascii', 'ignore'))
+    new_text = unicodedata.normalize('NFKD', text).replace(u'ł', 'l').\
+        replace(u'Ł', 'L').encode('ascii', 'ignore').decode()
+    return new_text
+
+def remove_punctuation(text: str) -> str:
+    punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+    no_punct = ""
+    for char in text:
+        if char not in punctuations:
+            no_punct = no_punct + char
+    return no_punct
+
+def convert2list(question: str) -> list:
+    words = question.split(" ")
+    if len(words) > 12:
+        words = words[:12]
+    return words
+
+def clear_question(question: str) -> list:
+    print(f'Oryginalne zapytanie: {question}')
+    question = remove_polish_chars(question)
+    question = remove_punctuation(question)
+    words_list = convert2list(question)
+    return words_list
+
+def buid_query(words_list: list) -> list:
+    for key, value in enumerate(words_list):
+        query = ""
+        queries.append(f'{value}')
+        if key < len(words_list) - 2:
+            queries.append(f'{value} {words_list[key + 1]}')
+            queries.append(f'{value} {words_list[key + 1]} {words_list[key + 2]}')
+        if query != "":
+            queries.append(query)
+    return queries
+
+
+def build_query_recursively(words_list: list, n: int) -> list:
+    if n < len(words_list) - 2:
+        queries.append(f'{words_list[n]}')
+        queries.append(f'{words_list[n]} {words_list[n + 1]}')
+        queries.append(f'{words_list[n]} {words_list[n + 1]} {words_list[n + 2]}')
+        build_query_recursively(words_list, n + 1)
+    else:
+        queries.append(f'{words_list[n]}')
+        queries.append(f'{words_list[n]} {words_list[n + 1]}')
+        queries.append(f'{words_list[n + 1]}')
+    return queries
+
+
+
+def get_answer_eth(queries: list) -> str:
+    """
+    Searching the eth contract using given str
+    :return: str
+    """
+    # question = remove_polish_chars(question)
+    print(f'Lista wariantów zapytań:\n{queries}')
+
+    try:
+        for question in queries:
+            ans = eth_.get_answer_from_blokchain(question)
+            if len(ans) > 0 and ans != f'Not found':
+                return ans
+                break
+    except Exception as e:
+        logging.error(e)
+        return f'Not found'
+    return ans
 
 
 def get_answer(question: str) -> str:
@@ -104,5 +172,7 @@ def get_answer(question: str) -> str:
     except Exception as e:
         logging.error(e)
         return f'Not found'
+
+
 
 
