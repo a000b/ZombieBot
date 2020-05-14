@@ -6,6 +6,7 @@ import wypok_bot_lib as w
 
 target_path = ""
 
+
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
@@ -55,6 +56,9 @@ def create_entry():
         else:
             img = "neutral_indicator.png"
 
+        if info['hinfo'] == '!!!!!!HALVING!!!!!!!':
+            img = "halving.png"
+
         entry = f"HODL {fun_days.days} dzień zabawy.\n" \
                f"Zainwestowano po 100 000 PLN w BTC i ETH w dniu {investment_date}\n" \
                f"ROI BTC: {roi[1]}%\n" \
@@ -74,6 +78,7 @@ def create_entry():
 
 def main():
     wpis = create_entry()
+    # print(wpis)
     if wpis[0] != 'err':
        w.add_entry(wpis[0], target_path + wpis[1], 1)
 
