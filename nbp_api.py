@@ -2,7 +2,7 @@ import requests
 import logging
 
 target_path: str = ""
-target_path = ""
+
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
@@ -11,6 +11,8 @@ def build_url(selector: str, days: int = 1)  -> str:
     host_url: str = "https://api.nbp.pl/api"
     if selector == "goldprice":
         url = f'{host_url}/cenyzlota/last/{days}/?format=json'
+    elif selector == 'usd':
+        url = f'{host_url}/exchangerates/rates/A/{selector}/?format=json'
     else:
         url = "Not found"
     return url
@@ -37,3 +39,4 @@ def queryNBP(url: str) -> list:
         result.append("err")
     return result
 
+# print(queryNBP(build_url(selector='usd'))[1]['rates'][0]['mid'])
