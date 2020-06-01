@@ -9,8 +9,8 @@ import answer_dic
 import eth_
 import nbp_api
 import game_roll_the_dice as gdice
-
-target_path = "/home/maciej/myfiles/"
+import sen_gen
+target_path = ""
 logging.basicConfig(filename=target_path + 'logs.log', level=logging.INFO,
                     format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(message)s')
 
@@ -39,6 +39,7 @@ def get_notifications():
                 type = 2
 
             if new == True and mtyp != 'pm':
+                image = 0
 
                 if type == 1:
                     logging.info(f'{id} {user} {post} {commentid}')
@@ -82,6 +83,10 @@ def get_notifications():
                     game = gdice.Game(gdice.Dice(), player, house)
                     game.play()
                     entry = f'{user}: Kostki zostały rzucone:\n{player}\n{house}\n{game}'
+                elif replay[0] == 'hangedman':
+                    image = 1
+                    entry = f'{user}: :/ ...'
+                    img = f'{target_path}hangedman.jpg'
                 elif  replay[0] == "Not found":
                     answer = cs.parse_response(cs.google_search_wypok(replay[1]))
                     if answer != "err":
@@ -91,12 +96,17 @@ def get_notifications():
                                 f'{answer}\n' \
                                 f'Serdecznie pozdrawiam :)'
                     else:
-                        entry = f'{user}: Dziękuję za komentarz/pytanie.\n' \
-                                f'Niestety nie rozumiem jego treści.\n' \
-                                f'Serdecznie pozdrawiam :)'
+                        answer = sen_gen.build_sentense()
+                        entry = f'{user}:\n{answer}'
+                               # f'{user}: Dziękuję za komentarz/pytanie.\n' \
+                               # f'Niestety nie rozumiem jego treści.\n' \
+                               # f'Serdecznie pozdrawiam :)'
                 else:
                     entry = f'{user}: {replay[0]}'
-                w.add_comments(user, post, entry, img='')
+                if image == 1:
+                    w.add_comments(user, post, entry, img=img, mode=1)
+                else:
+                    w.add_comments(user, post, entry, img='')
     else:
         logging.info(f'Error podczas czytania powiadomien')
         status = False
@@ -123,7 +133,7 @@ def parse_comment(comment):
 
 def main():
     if get_notifications():
-        w.mark_as_read_notifications()
+            w.mark_as_read_notifications()
 
 main()
 
