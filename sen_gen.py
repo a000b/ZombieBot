@@ -4,7 +4,6 @@ import re
 from collections import defaultdict
 from os import listdir
 
-target_path = ''
 target_path = 'books/'
 
 def choose_file(source_path = target_path):
@@ -37,11 +36,11 @@ def create_graph(text):
     return markov_graph
 
 # Preview graph.
-# limit = 3
-# for first_word in ('nie', 'żeby', 'to'):
-#     next_words = list(markov_graph[first_word].keys())[:limit]
-#     for next_word in next_words:
-#         print(first_word, next_word)
+def preview_graph(graph, words : list, limit_: int = 3):
+    for first_word in words:
+        next_words = list(graph[first_word].keys())[:limit_]
+        for next_word in next_words:
+            print(first_word, next_word)
 
 
 def walk_graph(graph, distance=5, start_node=None):
@@ -70,8 +69,8 @@ def walk_graph(graph, distance=5, start_node=None):
 
 def build_sentense():
     markov_graph = create_graph(read_book(choose_file(target_path)))
-    # for i in range(10):
+    preview_graph(markov_graph, ("który",), 3 )
     sentence = ' '.join(walk_graph(markov_graph, distance=30)).capitalize() + '.'
     return sentence
 
-# print(build_sentense())
+print(build_sentense())
