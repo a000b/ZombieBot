@@ -17,10 +17,10 @@ def decrypt(gpg_object, input_file, passphrase, output_file):
     return status
 
 def main():
-    gpg_path = '/home/maciej/.gnupg'
-    input_file = '/home/maciej/myfiles/logs.log'
-    input_file2 = '/home/maciej/myfiles/jobs.txt'
-    recipients = ['logs@qxz.pl']
+    gpg_path = '/home/m/.gnupg'
+    input_file = '/home/m/myfiles/logs.log'
+    input_file2 = '/home/m/myfiles/jobs.txt'
+    recipients = ['mail']
     encrypted = '/var/www/html/logs.txt.gpg'
     encrypted2 = '/var/www/html/jobs.txt.gpg'
     gpg = gnupg.GPG(gnupghome=gpg_path)
